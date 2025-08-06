@@ -1,0 +1,35 @@
+
+
+services:
+  # PHP & Apache サーバー
+  app:
+    build: .
+    container_name: drabaka-php-app
+    ports:
+      - "8080:80" # ホストの8080番ポートをコンテナの80番に接続
+    volumes:
+      - ./src:/var/www/html # PHPソースコードを配置するディレクトリ
+    depends_on:
+      - db
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_DATABASE=drabaka_db
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+
+  # MariaDB データベース
+  db:
+    image: mariadb:10.5
+    container_name: drabaka-mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: drabaka_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - ./db/init:/docker-entrypoint-initdb.d
+      - db_data:/var/lib/mysql # DBデータを永続化
+
+volumes:
+  db_data:
