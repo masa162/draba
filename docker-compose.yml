@@ -6,9 +6,11 @@ services:
     build: .
     container_name: drabaka-php-app
     ports:
-      - "8080:80" # ホストの8080番ポートをコンテナの80番に接続
+      - "8081:80" # ホストの8081番ポートをコンテナの80番に接続
     volumes:
       - ./src:/var/www/html # PHPソースコードを配置するディレクトリ
+      - ./scripts:/scripts   # スクリプト用のディレクトリをマウント
+      - ./docs:/docs       # CSVファイル参照用にdocsディレクトリをマウント
     depends_on:
       - db
     environment:
@@ -33,3 +35,4 @@ services:
 
 volumes:
   db_data:
+    name: drabaka_db_volume
