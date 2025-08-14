@@ -5,10 +5,10 @@ class Database {
     private $pdo;
 
     private function __construct() {
-        $host = getenv('MYSQL_HOST') ?: 'db';
-        $db   = getenv('MYSQL_DATABASE') ?: 'drabaka_db';
-        $user = getenv('MYSQL_USER') ?: 'user';
-        $pass = getenv('MYSQL_PASSWORD') ?: 'password';
+        $host = 'localhost';
+        $db   = 'xs125748_draba';
+        $user = 'xs125748_draba';
+        $pass = 'kjjjdu75d43';
         $charset = 'utf8mb4';
 
         $dsn = "mysql:host=$host;dbname=$db;charset=$charset";

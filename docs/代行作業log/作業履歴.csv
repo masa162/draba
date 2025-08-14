@@ -1,0 +1,2 @@
+id,pr_url,commit_id,created_at,updated_at,status,is_release,release_at,release_tag,branch,title,description,author,approved_by,work_type,work_scope,work_points,work_notes
+,,"",2025-08-13,2025-08-13,完了,false,,main,"開発環境の復旧とデータ投入スクリプトの修正","長期間放置されていた開発環境を復旧。Dockerの起動、DBへのデータ投入スクリプトのデバッグ（ヘッダー行処理、FK制約エラー）を行い、正常にデータが表示される状態まで復旧した。",nakayamamasayuki,,environment_setup,fullstack,,

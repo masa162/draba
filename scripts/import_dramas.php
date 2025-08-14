@@ -18,19 +18,26 @@ if (!file_exists($csvFilePath)) {
 $pdo = Database::getInstance()->getConnection();
 
 // DBをクリーンアップ（テスト用 - 必要に応じてコメントアウトを外してください）
+// $pdo->exec("SET FOREIGN_KEY_CHECKS=0");
+// $pdo->exec("TRUNCATE TABLE likes");
 // $pdo->exec("TRUNCATE TABLE reviews");
 // $pdo->exec("TRUNCATE TABLE dramas");
+// $pdo->exec("SET FOREIGN_KEY_CHECKS=1");
 
-$file = new SplFileObject($csvFilePath);
-$file->setFlags(SplFileObject::READ_CSV | SplFileObject::READ_AHEAD | SplFileObject::SKIP_EMPTY | SplFileObject::DROP_NEW_LINE);
+$handle = fopen($csvFilePath, "r");
+if ($handle === false) {
+    echo "エラー: ファイルを開けません: $csvFilePath\n";
+    exit(1);
+}
 
-$header = $file->fgetcsv(); // ヘッダー行を読み飛ばす
+$header = fgetcsv($handle); // ヘッダー行を読み込む
 
 $insertedDramaCount = 0;
 $updatedDramaCount = 0;
 $insertedReviewCount = 0;
 
-foreach ($file as $row) {
+while (($row = fgetcsv($handle)) !== false) {
+
     // CSVの行を連想配列に変換
     if (count($header) !== count($row)) continue;
     $data = array_combine($header, $row);
